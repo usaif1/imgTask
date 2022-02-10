@@ -3,17 +3,17 @@ import logo from "./logo.svg";
 import axios from "axios";
 import "./App.css";
 
-import { Response } from "./types";
+import { Response, SingleData } from "./types";
 
-function App() {
-  const [data, setData] = useState<any>([]);
+const App: React.FC = () => {
+  const [data, setData] = useState<string[]>([""]);
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
     const response: Response = await axios.get("https://finalspaceapi.com/api/v0/character/");
-    const imgArr = response.data.map((data: any) => {
+    const imgArr = response.data.map((data: SingleData) => {
       return data.img_url;
     });
     setData(imgArr);
@@ -33,6 +33,6 @@ function App() {
       })}
     </div>
   );
-}
+};
 
 export default App;
