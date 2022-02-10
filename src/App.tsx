@@ -7,21 +7,24 @@ import { Response, SingleData } from "./types";
 
 const App: React.FC = () => {
   const [data, setData] = useState<string[]>([""]);
+  const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
     const response: Response = await axios.get("https://finalspaceapi.com/api/v0/character/");
-    const imgArr = response.data.map((data: SingleData) => {
+    const imgArr: string[] = response.data.map((data: SingleData) => {
       return data.img_url;
     });
     setData(imgArr);
+    setLoading(false);
   };
 
   return (
     <div className="App" style={{ display: "flex", justifyContent: "start", flexWrap: "wrap" }}>
-      {data.map((img: any, index: any) => {
+      {loading ? <p>Loading...</p> : null}
+      {data.map((img: string, index: number) => {
         return (
           <img
             src={img}
